@@ -203,7 +203,7 @@ export const ChannelPane = React.memo(function ChannelPane({
   );
   const [isMainDeferredEditPending, setMainDeferredEditPending] = React.useState(false);
   const isMarketObserver = useMarketObserver(agentPubkeys, currentPubkey);
-  const { isMarketChannel, messageFooters: marketMessageFooters, messages: marketTimelineMessages } = useMarketChannelTimeline(messages);
+  const { isMarketChannel, messageFooters: marketMessageFooters, messages: marketTimelineMessages } = useMarketChannelTimeline(messages, profiles);
   const isNonMemberView =
     activeChannel !== null &&
     !activeChannel.isMember &&
@@ -369,7 +369,7 @@ export const ChannelPane = React.memo(function ChannelPane({
     onOpenMembers,
     onWelcomeAddAgent: onAddAgent ? handleWelcomeAddAgent : undefined,
   });
-  const channelIntro = isHuddleTranscript ? null : standardChannelIntro;
+  const channelIntro = isHuddleTranscript || isMarketChannel ? null : standardChannelIntro;
   const { mainTimelineEntries, recentMentions, visibleMessages } =
     useChannelPaneMessages({
       activeChannel,

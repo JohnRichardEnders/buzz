@@ -8,8 +8,12 @@ import {
 } from "@/features/market/lib/marketTimeline";
 import { MarketChannelIntro } from "@/features/market/ui/MarketChannelIntro";
 import type { TimelineMessage } from "@/features/messages/types";
+import type { UserProfileLookup } from "@/features/profile/lib/identity";
 
-export function useMarketChannelTimeline(messages: TimelineMessage[]) {
+export function useMarketChannelTimeline(
+  messages: TimelineMessage[],
+  profiles?: UserProfileLookup,
+) {
   const projection = useMarketChannel();
   const timelineMessages = useMarketTimelineMessages(messages);
   const anchor = React.useMemo(
@@ -24,11 +28,12 @@ export function useMarketChannelTimeline(messages: TimelineMessage[]) {
               <MarketChannelIntro
                 anchorMessage={anchor}
                 bids={projection?.bids ?? []}
+                profiles={profiles}
               />
             ),
           }
         : undefined,
-    [anchor, projection?.bids],
+    [anchor, profiles, projection?.bids],
   );
 
   return {
